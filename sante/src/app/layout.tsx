@@ -12,7 +12,7 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Contact list",
+  title: "Santé - Contact list",
   description:
     "A simple contact list app built with tRPC and Next.js for santé test",
   icons: [{ rel: "icon", url: "/favicon.ico" }],

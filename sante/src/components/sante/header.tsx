@@ -2,20 +2,19 @@ import Image from "next/image";
 
 export const Header = () => {
   return (
-    <header className="bg-white">
+    <header className="bg-white shadow-xl">
       <nav
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
         aria-label="Global"
       >
-        test
         <div className="flex lg:flex-1">
           <a href="/" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
+            <span className="sr-only">logo</span>
             <Image
-              className="h-8 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              width={38}
-              height={38}
+              className="h-16 w-auto"
+              src="/logo.webp"
+              width={42}
+              height={42}
               alt=""
             />
           </a>
