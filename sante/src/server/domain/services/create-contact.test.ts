@@ -5,6 +5,7 @@ import { CreateContact } from "./create-contact";
 import type { ContactRepository } from "@/server/infra/database/repository";
 import { Result } from "@/common/either";
 import { CREATE_CONTACT_ERRORS } from "../errors/contact";
+import type { PromiseResolvedType } from "@/common/types";
 
 void describe("CreateContact", async () => {
   const makeSut = () => {
@@ -25,7 +26,11 @@ void describe("CreateContact", async () => {
     const { sut, mockedContactRepository } = makeSut();
 
     const mockedReturnvalue = { props, id: 1 };
-    mockedContactRepository.create.mockResolvedValue(mockedReturnvalue as any);
+    mockedContactRepository.create.mockResolvedValue(
+      mockedReturnvalue as PromiseResolvedType<
+        typeof mockedContactRepository.create
+      >,
+    );
 
     const value = await sut.execute(props);
     expect(value).toEqual(mockedReturnvalue);
@@ -34,7 +39,7 @@ void describe("CreateContact", async () => {
   void it("should not create a contact with invalid name", async () => {
     const { sut, mockedContactRepository } = makeSut();
 
-    mockedContactRepository.create.mockResolvedValue(undefined as any);
+    mockedContactRepository.create.mockResolvedValue(undefined as never);
 
     const value = await sut.execute({ ...props, name: "" });
     const failureResponse = Result.fail(CREATE_CONTACT_ERRORS.NAME_IS_REQUIRED);
@@ -45,7 +50,7 @@ void describe("CreateContact", async () => {
   void it("should not create a contact with invalid email", async () => {
     const { sut, mockedContactRepository } = makeSut();
 
-    mockedContactRepository.create.mockResolvedValue(undefined as any);
+    mockedContactRepository.create.mockResolvedValue(undefined as never);
 
     const value = await sut.execute({ ...props, email: "invalidemail" });
     const failureResponse = Result.fail(CREATE_CONTACT_ERRORS.EMAIL_IS_INVALID);
@@ -57,7 +62,11 @@ void describe("CreateContact", async () => {
     const { sut, mockedContactRepository } = makeSut();
 
     const mockedReturnvalue = { props: { ...props, email: "" }, id: 1 };
-    mockedContactRepository.create.mockResolvedValue(mockedReturnvalue as any);
+    mockedContactRepository.create.mockResolvedValue(
+      mockedReturnvalue as PromiseResolvedType<
+        typeof mockedContactRepository.create
+      >,
+    );
 
     const value = await sut.execute({ ...props, email: "" });
     expect(value).toStrictEqual(mockedReturnvalue);
