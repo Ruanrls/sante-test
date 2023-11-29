@@ -56,7 +56,7 @@ export const ContactSheetForm = ({ trigger, contact }: Props) => {
 
     try {
       if (contact) {
-        editMutation.mutate({
+        await editMutation.mutateAsync({
           id: contact.id,
           name: values.name,
           phone: values.phone,
@@ -68,7 +68,7 @@ export const ContactSheetForm = ({ trigger, contact }: Props) => {
           description: `The contact ${values.name} was updated`,
         });
       } else {
-        createMutation.mutate({
+        await createMutation.mutateAsync({
           name: values.name,
           phone: values.phone,
           email: email,

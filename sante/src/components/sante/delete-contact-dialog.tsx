@@ -11,6 +11,10 @@ import {
 import { AlertDialogFooter, AlertDialogHeader } from "../ui/alert-dialog";
 import { api } from "@/trpc/react";
 import { useToast } from "../ui/use-toast";
+import Image from "next/image";
+import { Loading } from "./loading";
+import { Button } from "../ui/button";
+import { useMemo } from "react";
 
 type Props = {
   id: number;
@@ -33,8 +37,13 @@ export const DeleteContactDialog = ({ trigger, onDelete, id }: Props) => {
     },
   });
 
+  const isLoading = useMemo(
+    () => deleteMutation.isLoading,
+    [deleteMutation.isLoading],
+  );
+
   const handleDelete = async () => {
-    deleteMutation.mutate({
+    await deleteMutation.mutateAsync({
       id,
     });
 
@@ -57,7 +66,27 @@ export const DeleteContactDialog = ({ trigger, onDelete, id }: Props) => {
 
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
+          <Button
+            className="flex"
+            type="button"
+            variant="destructive"
+            disabled={isLoading}
+            onClick={handleDelete}
+          >
+            <Loading
+              isLoading={isLoading}
+              fallback={
+                <Image
+                  src="/icons/loader.svg"
+                  alt="A SVG loader"
+                  width={28}
+                  height={28}
+                />
+              }
+            >
+              Delete
+            </Loading>
+          </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
