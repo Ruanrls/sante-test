@@ -37,3 +37,12 @@ yarn start;
 ```
 
 ## We are done!
+
+## Short version (running):
+
+```
+docker compose up -d postgres;
+npx prisma migrate deploy;
+yarn build;
+yarn start;
+```
