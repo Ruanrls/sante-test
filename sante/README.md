@@ -5,6 +5,7 @@ For this test purpose, I've already setted up a database on AWS RDS, and also ad
 ## build and run the app:
 
 ```
+yarn;
 yarn build;
 yarn start;
 ```
