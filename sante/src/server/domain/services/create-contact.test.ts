@@ -19,6 +19,7 @@ void describe("CreateContact", async () => {
   const props = {
     name: "Jack sparrow",
     email: "jacksparrow@gmail.com",
+    phone: "3199999999",
   };
   void it("should create a contact", async () => {
     const { sut, mockedContactRepository } = makeSut();

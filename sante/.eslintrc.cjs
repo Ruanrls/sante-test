@@ -23,6 +23,8 @@ const config = {
     "@typescript-eslint/no-redundant-type-constituents": "warn",
     "@typescript-eslint/unbound-method": "warn",
     "@typescript-eslint/no-unsafe-argument": "warn",
+    "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/no-explicit-any": "warn",
 
     "@typescript-eslint/consistent-type-imports": [
       "warn",
