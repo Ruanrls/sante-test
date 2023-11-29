@@ -16,4 +16,6 @@ COPY . .
 RUN npx prisma generate
 RUN yarn build
 
+RUN npx prisma migrate deploy
+
 CMD [ "yarn", "start" ]
