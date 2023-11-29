@@ -21,9 +21,8 @@ export const CardWithHero = ({ image, title, content, footer }: Props) => {
             <Image
               alt={image.alt}
               src={image.src}
-              layout="fill"
-              objectFit="cover"
               className="rounded-t-lg"
+              fill
             />
           </div>
 
