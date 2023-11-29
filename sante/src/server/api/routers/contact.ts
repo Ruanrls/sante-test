@@ -17,15 +17,17 @@ const deleteContactService = new DeleteContact(contactRepository);
 export const contactRouter = createTRPCRouter({
   getFiltered: publicProcedure
     .input(
-      z.object({
-        filter: z.string().optional(),
-        pagination: z
-          .object({
-            page: z.number().optional(),
-            pageSize: z.number().optional(),
-          })
-          .optional(),
-      }),
+      z
+        .object({
+          filter: z.string().optional(),
+          pagination: z
+            .object({
+              page: z.number().optional(),
+              pageSize: z.number().optional(),
+            })
+            .optional(),
+        })
+        .optional(),
     )
     .query(({ input }) =>
       getFilteredContactsService.execute({
@@ -42,6 +44,7 @@ export const contactRouter = createTRPCRouter({
       z.object({
         name: z.string().min(1),
         email: z.string().email().optional(),
+        phone: z.string().min(10).max(15),
       }),
     )
     .mutation(async ({ input }) => createContactService.execute(input)),
@@ -52,6 +55,7 @@ export const contactRouter = createTRPCRouter({
         id: z.number(),
         name: z.string().min(1),
         email: z.string().email().optional(),
+        phone: z.string().min(10).max(15),
       }),
     )
     .mutation(async ({ input }) => updateContactService.execute(input)),

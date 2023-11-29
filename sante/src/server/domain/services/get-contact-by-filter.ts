@@ -12,8 +12,6 @@ export class GetContactByFilter {
   execute = async (props: GetContactByFilterProps) => {
     const { filter, pagination } = props;
 
-    console.log("EU estou aqui -------> ", this);
-
     const contactList = await this.contactRepository.getByFilter({
       filter,
       pagination,

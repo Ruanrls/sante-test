@@ -7,20 +7,21 @@ type UpdateContactProps = {
   id: number;
   name: string;
   email?: string;
+  phone: string;
 };
 
 export class UpdateContact {
   constructor(private readonly contactRepository: ContactRepository) {}
 
   execute = async (props: UpdateContactProps) => {
-    const { id, name, email } = props;
+    const { id, name, email, phone } = props;
     const contact = await this.contactRepository.getById(id);
 
     if (!contact) {
       return Result.fail(GET_CONTACT_ERRORS.CONTACT_NOT_FOUND);
     }
 
-    const contactOrError = Contact.create({ name, email });
+    const contactOrError = Contact.create({ name, email, phone });
     if (contactOrError.isFailure()) {
       return Result.fail(contactOrError.error);
     }
@@ -31,6 +32,7 @@ export class UpdateContact {
       id,
       name: toDTO.name,
       email: toDTO.email,
+      phone: toDTO.phone,
     });
 
     return updatedContact;

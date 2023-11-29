@@ -5,12 +5,14 @@ import { PAGINATION } from "@/common/constants";
 type CreateProps = {
   name: string;
   email?: string;
+  phone: string;
 };
 
 type UpdateProps = {
   id: number;
   name?: string;
   email?: string;
+  phone?: string;
 };
 
 type GetByFilterProps =
@@ -23,7 +25,11 @@ type GetByFilterProps =
 export class ContactRepository {
   async create(contact: CreateProps) {
     return await db.contact.create({
-      data: contact,
+      data: {
+        name: contact.name,
+        email: contact.email ?? null,
+        phone: contact.phone,
+      },
     });
   }
 
@@ -32,7 +38,11 @@ export class ContactRepository {
 
     return await db.contact.update({
       where: { id },
-      data,
+      data: {
+        name: data.name,
+        email: data.email ?? null,
+        phone: data.phone,
+      },
     });
   }
 
@@ -52,6 +62,15 @@ export class ContactRepository {
 
     const { filter, pagination } = params;
     const trimmed = filter?.trim();
+
+    const isFilterEmpty = !trimmed;
+
+    if (isFilterEmpty) {
+      return await db.contact.findMany({
+        skip: pagination?.skip ?? PAGINATION.SKIP,
+        take: pagination?.take ?? PAGINATION.TAKE,
+      });
+    }
 
     return await db.contact.findMany({
       where: {

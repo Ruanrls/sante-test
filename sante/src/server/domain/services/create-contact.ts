@@ -4,17 +4,19 @@ import { Contact } from "../entities/contact";
 export type ContactProps = {
   name: string;
   email?: string;
+  phone: string;
 };
 
 export class CreateContact {
   constructor(private readonly contactRepository: ContactRepository) {}
 
   execute = (props: ContactProps) => {
-    const { name, email } = props;
+    const { name, email, phone } = props;
 
     const contactOrError = Contact.create({
       name,
       email,
+      phone,
     });
 
     if (contactOrError.isFailure()) {
